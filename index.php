@@ -5,18 +5,22 @@ class Movie {
     public $director;
     public $year;
     public $duration;
-    public Genre $genre;
+    public $genres = [];
 
     public function __construct($_title, $_director, $_year, $_duration, Genre $_genre = null) {
         $this->title = $_title;
         $this->director = $_director;
         $this->year = $_year;
         $this->duration = $_duration;
-        $this->genre = $_genre;
+        $this->genres[] = $_genre ? $_genre : new Genre("Unknown", "No description available");
     }
 
     public function getMovieDuration() {
         return "The duration of the movie is: " . round($this->duration / 60, 0) . " hours, " . $this->duration % 60 . " minutes (" . $this->duration . " minutes).";
+    }
+
+    public function setNewGenre($name, $description) {
+        return $this->genres[] = new Genre($name, $description);
     }
 }
 
@@ -37,6 +41,9 @@ var_dump($movie1);
 var_dump($movie2);
 echo "Duration of Movie 1: " . $movie1->getMovieDuration() . "<br>";
 echo "Duration of Movie 2: " . $movie2->getMovieDuration() . "<br>";
+
+$movie1->setNewGenre("Thriller", "A genre that creates suspense and excitement.");
+var_dump($movie1);
 
 ?>
 
