@@ -1,49 +1,46 @@
 <?php
 
-class Movie {
-    public $title;
-    public $director;
-    public $year;
-    public $duration;
-    public $genres = [];
+require_once './Traits/HasDirector.php';
 
-    public function __construct($_title, $_director, $_year, $_duration, Genre $_genre = null) {
-        $this->title = $_title;
-        $this->director = $_director;
-        $this->year = $_year;
-        $this->duration = $_duration;
-        $this->genres[] = $_genre ? $_genre : new Genre("Unknown", "No description available");
-    }
+require_once './Models/Movie.php';
+require_once './Models/Genre.php';
 
-    public function getMovieDuration() {
-        return "The duration of the movie is: " . round($this->duration / 60, 0) . " hours, " . $this->duration % 60 . " minutes (" . $this->duration . " minutes).";
-    }
+require_once './db/db.php';
 
-    public function setNewGenre($name, $description) {
-        return $this->genres[] = new Genre($name, $description);
-    }
-}
 
-class Genre extends Movie {
-    public $name;
-    public $description;
+var_dump($movies);
 
-    public function __construct($_name, $_description) {
-        $this->name = $_name;
-        $this->description = $_description;
-    }
-}
+// var_dump($movies[0]);
+// var_dump($movies[1]);
+echo "Duration of Movie 1: " . $movies[0]->getMovieDuration() . "<br>";
+echo "Duration of Movie 2: " . $movies[1]->getMovieDuration() . "<br>";
 
-$movie1 = new Movie("Inception", "Christopher Nolan", 2010, 148, new Genre ("Sci-Fi", "A genre that explores futuristic concepts and advanced technology."));
-$movie2 = new Movie("The Godfather", "Francis Ford Coppola", 1972, 175, new Genre ("Crime", "A genre that focuses on criminal activities and the lives of criminals."));
+$movies[0]->setNewGenre("Thriller", "A genre that creates suspense and excitement.");
+$movies[0]->setDirector("Christopher Nolan");
+$movies[1]->setDirector("Francis Ford Coppola");
 
-var_dump($movie1);
-var_dump($movie2);
-echo "Duration of Movie 1: " . $movie1->getMovieDuration() . "<br>";
-echo "Duration of Movie 2: " . $movie2->getMovieDuration() . "<br>";
+// var_dump($movies[0]);
+// var_dump($movies[1]);
 
-$movie1->setNewGenre("Thriller", "A genre that creates suspense and excitement.");
-var_dump($movie1);
+echo "<hr/>";
+
+$newGenre = new Genre("Adventure", "A genre that involves exciting journeys and exploration.");
+
+$movies[2]->setDirector("Christopher Nolan");
+// var_dump($movies[2]);
+
+$movies[2]->setNewGenre($newGenre->name, $newGenre->description);
+// var_dump($movies[2]);
+var_dump($movies[2]->getDirector());
+
+echo "<hr/>";
+// var_dump($movies[3]);
+var_dump($movies[0]->genres);
+var_dump($movies[1]->genres);
+var_dump($movies[2]->genres);
+var_dump($movies[3]->genres);
+
+// var_dump($movies);
 
 ?>
 
