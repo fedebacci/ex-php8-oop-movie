@@ -8,7 +8,7 @@ trait HasDirector {
     }
 
     public function getDirector() {
-        return $this->director;
+        return $this->director ? $this->director : null;
     }
 }
 
